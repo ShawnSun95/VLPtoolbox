@@ -1,0 +1,32 @@
+% 根据原始VLP数据计算高频RSS，没有加汉明窗
+
+function [t,fft_result]=VLP_preprocess_highfreq_ham(vlp,nLED,fhz,fs,dt,fre)
+
+Ntotal=length(vlp);
+
+% FFT parameter
+N=dt*fs; %采集点个数
+Ham_win = hamming(N); %N为采样点数
+num_point=floor(Ntotal/N)*fre;
+fft_result=zeros(num_point,nLED);
+n=0:N-1;
+t=(1:num_point)*dt/fre;
+
+for k=0:(num_point-1)
+    %傅里叶变换
+    if(k<fre/2)
+        s=vlp(1:N);
+    elseif(k>=num_point-1-fre/2)
+        s=vlp(1+(num_point-fre)*N/fre:N+(num_point-fre)*N/fre);
+    else
+        s=vlp(1+(k-fre/2)*N/fre:N+(k-fre/2)*N/fre);
+    end
+    s=s.*Ham_win';
+    F=fft(s,N);
+    mag=abs(F);
+    mag=mag*2/N*1.852;
+    f=n*fs/N;
+    for i=1:nLED
+        fft_result(k+1,i) = mag(int32((fhz(i))*N/fs)+1)/1.27;
+    end
+end
