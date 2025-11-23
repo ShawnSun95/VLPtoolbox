@@ -1,7 +1,7 @@
 %
 % Convert Euler angles to Dirction Cosine Matrix - ENU system
 % by Xiao Sun, 2025
-%
+% 此函数是错的，待修改 11.23
 function dc = Euler2Dcm_ENU(roll, pitch, heading)
 
 cr = cos(roll); cp = cos(pitch); cy = cos(heading);
