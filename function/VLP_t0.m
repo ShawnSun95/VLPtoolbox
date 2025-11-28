@@ -1,4 +1,4 @@
-% 通过VLP文件名读取初始时间
+% 通过VLP文件名读取初始时间，int_sec表示是否输出整形时间
 
 function t0=VLP_t0(files,int_sec)
 
@@ -15,14 +15,23 @@ end
 % 提取各部分（cell 转 double）
 hour   = str2double(tokens{1}{4});
 minute = str2double(tokens{1}{5});
-second = str2double(tokens{1}{6})+str2double(tokens{1}{7})/10;
+second = str2double(tokens{1}{6});
+
+% 小数部分
+num_digits = length(tokens{1}{7});
+if num_digits == 1
+    sec_frac = str2double(tokens{1}{7})/10;
+elseif num_digits == 2
+    sec_frac = str2double(tokens{1}{7})/100;
+end
+second = second + sec_frac;
 
 t0=(hour-8)*3600+minute*60+second;
 if(int_sec)
     if(str2double(tokens{1}{7})>5)
-        offset=1.5-str2double(tokens{1}{7})/10;
+        offset=1.5-sec_frac;
     else
-        offset=0.5-str2double(tokens{1}{7})/10;
+        offset=0.5-sec_frac;
     end
     t0=t0+offset+0.5;
 end
