@@ -6,7 +6,13 @@ function t0=VLP_t0(files,int_sec)
 pattern = '^(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})_(\d+)\..*$';
 
 % 执行匹配
-tokens = regexp(files, pattern, 'tokens');
+if contains(files, '/')
+    filename = extractAfter(files, '/');
+else
+    filename = files;
+end
+
+tokens = regexp(filename, pattern, 'tokens');
 
 if isempty(tokens)
     error('文件名格式不匹配预期模式！');

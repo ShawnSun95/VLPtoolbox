@@ -2,7 +2,9 @@
 
 这是一个用于可见光定位 (VLP) 及其相关多传感器融合（IMU、全站仪真值）的数据处理、数据分析与算法工具箱。包含实时数据采集脚本以及用于离线处理、算法验证、坐标转换和精度评估的 MATLAB 函数库。
 
-@author: Sun, Xiao, Wu Haoyu, Wuhan University  
+@author: Sun, Xiao, Wu, Haoyu, Wuhan University  
+
+@测试版本：MATLAB 2024b
 
 ## 功能列表
 
@@ -28,10 +30,24 @@
 - **accuracy_eval.m**: 对比解算轨迹与参考真值，并绘制CDF曲线
 - **plot3Dtraj.m**: 绘制3D轨迹、LED位置和真值轨迹
 - **plot_export_imu_data.m**: 绘制IMU数据，并输出文件
+- **VLP_parameter.m**: 读取VLP参数配置
+- **config_from_yaml**: 读取数据配置文件
 
 ### realtime 目录
 
 - **real_time_show_rss.py**: 通过串口实时读取光强传感器数据，并绘制RSS变化等图表
+
+### 第三方库
+
+- **MartinKoch123-yaml-1.6.0.0**: 用于配置文件yaml的解析
+
+### config 目录
+
+- **VLP_parameter.yaml**: 用于可见光定位的基本参数
+
+### data 目录
+
+- 未来完善
 
 ## 安装说明
 
