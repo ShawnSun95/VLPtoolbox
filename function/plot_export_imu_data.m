@@ -58,8 +58,8 @@ function plot_export_imu_data(imu_data, output_filename)
     
     if nargin == 2
         % 准备输出数据：时间、加速度三轴、角速度三轴
-        output_data = [imu_data.Second, imu_data.Acc_X, imu_data.Acc_Y, imu_data.Acc_Z, ...
-                       imu_data.Gyr_X, imu_data.Gyr_Y, imu_data.Gyr_Z];
+        output_data = [imu_data.Time, imu_data.Gyr_X, imu_data.Gyr_Y, imu_data.Gyr_Z, ...
+                       imu_data.Acc_X, imu_data.Acc_Y, imu_data.Acc_Z];
         
         % 打开文件用于写入
         fid = fopen(output_filename, 'w');
@@ -69,7 +69,7 @@ function plot_export_imu_data(imu_data, output_filename)
         
         % 写入数据，列之间用\t分隔
         for i = 1:size(output_data, 1)
-            fprintf(fid, '%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\n', output_data(i, :));
+            fprintf(fid, '%.3f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\n', output_data(i, :));
         end
         
         % 关闭文件
